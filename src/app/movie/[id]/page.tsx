@@ -1,9 +1,21 @@
-import style from "./page.module.css";
-import movies from "@/dummy.json";
+import style from './page.module.css';
 
-export default function Page() {
+export default async function Page({
+  params,
+}: {
+  params: Promise<{ id: string }>;
+}) {
+  const { id } = await params;
+
+  const response = await fetch(
+    `${process.env.NEXT_PUBLIC_API_SERVER}/movie/${id}`,
+    { cache: 'force-cache' }
+  );
+
+  const movies = await response.json();
+  console.log(movies);
+
   const {
-    id,
     title,
     subTitle,
     company,
@@ -12,7 +24,7 @@ export default function Page() {
     posterImgUrl,
     releaseDate,
     genres,
-  } = movies[3];
+  } = movies;
 
   return (
     <div className={style.container}>
@@ -26,7 +38,7 @@ export default function Page() {
         <div>
           <h2>{title}</h2>
           <div>
-            {releaseDate} / {genres.join(", ")} / {runtime}분
+            {releaseDate} / {genres.join(', ')} / {runtime}분
           </div>
           <div>{company}</div>
         </div>
