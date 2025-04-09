@@ -1,6 +1,7 @@
 import MovieItem from '@/components/movie-item';
 import style from './page.module.css';
 import { MovieData } from '@/types';
+import { notFound } from 'next/navigation';
 
 export default async function Page({
   searchParams,
@@ -15,6 +16,9 @@ export default async function Page({
   );
 
   if (!response.ok) {
+    if (response.status === 404) {
+      notFound();
+    }
     return <div>로딩 중.....</div>;
   }
 

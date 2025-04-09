@@ -25,7 +25,7 @@ async function RecoMovie() {
 
 async function AllMovie() {
   const response = await fetch(`${process.env.NEXT_PUBLIC_API_SERVER}/movie`, {
-    cache: 'no-store',
+    cache: 'force-cache',
   });
 
   if (!response.ok) {
