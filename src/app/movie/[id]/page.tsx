@@ -13,7 +13,6 @@ export default async function Page({
   );
 
   const movies = await response.json();
-  console.log(movies);
 
   const {
     title,

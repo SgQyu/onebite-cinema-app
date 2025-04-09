@@ -1,5 +1,4 @@
 import MovieItem from '@/components/movie-item';
-import movies from '@/dummy.json';
 import style from './page.module.css';
 import { MovieData } from '@/types';
 
