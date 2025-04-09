@@ -11,7 +11,7 @@ export default async function Page({
 
   const response = await fetch(
     `${process.env.NEXT_PUBLIC_API_SERVER}/movie/search?q=${q}`,
-    { cache: 'reload' }
+    { cache: 'force-cache' }
   );
 
   if (!response.ok) {
