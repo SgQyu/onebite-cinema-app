@@ -3,15 +3,10 @@ import style from './page.module.css';
 import { MovieData } from '@/types';
 import { notFound } from 'next/navigation';
 import delay from '@/util/delay';
+import { Suspense } from 'react';
 
-export default async function Page({
-  searchParams,
-}: {
-  searchParams: Promise<{ q: string }>;
-}) {
-  const { q } = await searchParams;
-
-  await delay(3000);
+async function SearchResult({ q }: { q: string }) {
+  await delay(1000);
 
   const response = await fetch(
     `${process.env.NEXT_PUBLIC_API_SERVER}/movie/search?q=${q}`,
@@ -33,5 +28,19 @@ export default async function Page({
         <MovieItem key={movie.id} {...movie} />
       ))}
     </div>
+  );
+}
+
+export default async function Page({
+  searchParams,
+}: {
+  searchParams: Promise<{ q: string }>;
+}) {
+  const { q } = await searchParams;
+
+  return (
+    <Suspense key={q || ''} fallback={<div>검색 결과를 찾는 중.....</div>}>
+      <SearchResult q={q || ''} />
+    </Suspense>
   );
 }
